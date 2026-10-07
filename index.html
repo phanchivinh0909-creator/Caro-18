@@ -49,34 +49,8 @@
             --cell-hover: #6ee7b7;
             --x-color: #047857;
             --o-color: #2563eb;
-        }
-
-        /* Theme: Tím Huyền Ảo */
-        body.theme-purple {
-            --bg-color: #1e1b4b;
-            --panel-bg: rgba(49, 46, 129, 0.85);
-            --text-color: #e0e7ff;
-            --accent-color: #a855f7;
-            --accent-hover: #9333ea;
-            --board-bg: #312e81;
-            --cell-bg: #3730a3;
-            --cell-hover: #4338ca;
-            --x-color: #ec4899;
-            --o-color: #38bdf8;
-        }
-
-        /* Theme: Vàng Hoàng Gia */
-        body.theme-gold {
-            --bg-color: #1c1917;
-            --panel-bg: rgba(41, 37, 36, 0.9);
-            --text-color: #fef08a;
-            --accent-color: #eab308;
-            --accent-hover: #ca8a04;
-            --board-bg: #292524;
-            --cell-bg: #44403c;
-            --cell-hover: #57534e;
-            --x-color: #fb7185;
-            --o-color: #34d399;
+            background-image: radial-gradient(#6ee7b7 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
         }
 
         * {
@@ -100,7 +74,6 @@
             position: relative;
         }
 
-        /* Màn hình chờ / Menu chính */
         .screen {
             display: flex;
             flex-direction: column;
@@ -171,7 +144,6 @@
             transform: scale(0.97);
         }
 
-        /* Giao diện game chính */
         .game-container {
             display: flex;
             flex-direction: column;
@@ -234,7 +206,6 @@
             transform: scale(0.96);
         }
 
-        /* Khung Online */
         .online-panel {
             background: var(--panel-bg);
             padding: 12px 20px;
@@ -264,7 +235,6 @@
             font-weight: bold;
         }
 
-        /* Bàn cờ 15x15 */
         .board-container {
             background: var(--panel-bg);
             padding: 12px;
@@ -305,7 +275,6 @@
         .cell.x { color: var(--x-color); text-shadow: 0 0 8px rgba(244, 63, 94, 0.4); }
         .cell.o { color: var(--o-color); text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
 
-        /* Modal chung */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -380,11 +349,10 @@
             accent-color: var(--accent-color);
         }
 
-        /* Hiệu ứng hoa anh đào rơi */
-        .sakura {
+        /* Hiệu ứng hoa anh đào / lá bạc hà rơi */
+        .falling-item {
             position: fixed;
             top: -15px;
-            background: #ffb7c5;
             border-radius: 150% 0 150% 0;
             animation: fall linear infinite;
             z-index: 1;
@@ -460,10 +428,8 @@
             <h2>Cửa Hàng Giao Diện</h2>
             <div class="shop-items">
                 <button class="shop-btn active" onclick="setTheme('default', 0)">Mặc Định (0 xu)</button>
-                <button class="shop-btn" onclick="setTheme('pink', 40)">🌸 Hồng Sakura (40 xu)</button>
-                <button class="shop-btn" onclick="setTheme('green', 40)">🌿 Xanh Bạc Hà (40 xu)</button>
-                <button class="shop-btn" onclick="setTheme('purple', 60)">🔮 Tím Huyền Ảo (60 xu)</button>
-                <button class="shop-btn" onclick="setTheme('gold', 60)">👑 Vàng Hoàng Gia (60 xu)</button>
+                <button class="shop-btn" onclick="setTheme('pink', 30)">🌸 Hồng Sakura (30 xu)</button>
+                <button class="shop-btn" onclick="setTheme('green', 30)">🌿 Xanh Bạc Hà (30 xu)</button>
             </div>
             <button onclick="closeModal('shop-modal')">Đóng</button>
         </div>
@@ -516,7 +482,6 @@
         setTheme(currentTheme, 0);
         createBoard();
 
-        // Xử lý chuyển màn hình menu
         function openModeSelect() {
             document.getElementById('main-menu').classList.add('hidden');
             document.getElementById('mode-select-screen').classList.remove('hidden');
@@ -606,15 +571,17 @@
             cell.classList.add(player.toLowerCase());
         }
 
-        // AI 3 Mức Độ Thông Minh
+        // AI thông minh với cấp độ
         function aiTurn() {
             let move = null;
             if (gameMode === 'AI-Hard') {
                 move = getBestAIMove();
             } else if (gameMode === 'AI-Medium') {
-                move = Math.random() < 0.65 ? getBestAIMove() : getRandomSmartMove();
+                // Tăng độ khôn cho trung bình: 85% đánh nước tốt/chặn nguy hiểm, 15% ngẫu nhiên thông minh
+                move = Math.random() < 0.85 ? getBestAIMove() : getSmartRandomMove();
             } else {
-                move = getRandomSmartMove();
+                // Tăng độ khôn cho dễ: Biết chặn khi người chơi sắp thắng 4 nước hoặc đánh quanh ô có sẵn
+                move = getEasySmartMove();
             }
 
             if (move) {
@@ -651,10 +618,28 @@
                     }
                 }
             }
-            return bestMove;
+            return bestMove || getSmartRandomMove();
         }
 
-        function getRandomSmartMove() {
+        // AI Dễ thông minh hơn: Kiểm tra nếu người chơi có 3 hoặc 4 nước liền thì chặn, còn lại đánh gần quân cờ
+        function getEasySmartMove() {
+            // Kiểm tra xem người chơi có nước nào sắp thắng (3 hoặc 4 con) để chặn
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    if (board[r][c] === '') {
+                        board[r][c] = 'X';
+                        if (checkWin(r, c, 'X')) {
+                            board[r][c] = '';
+                            return { r, c }; // Chặn ngay lập tức
+                        }
+                        board[r][c] = '';
+                    }
+                }
+            }
+            return getSmartRandomMove();
+        }
+
+        function getSmartRandomMove() {
             let emptyCells = [];
             for (let r = 0; r < BOARD_SIZE; r++) {
                 for (let c = 0; c < BOARD_SIZE; c++) {
@@ -782,7 +767,6 @@
             resetGame();
         }
 
-        // Quản lý Modal & Shop & Settings
         function openShopModal() { document.getElementById('shop-modal').classList.add('show'); }
         function openSettingsModal() { document.getElementById('settings-modal').classList.add('show'); }
         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
@@ -800,33 +784,37 @@
             document.body.className = `theme-${themeName}`;
             localStorage.setItem('caro_theme', themeName);
 
-            // Cập nhật nút active trong shop
             const buttons = document.querySelectorAll('.shop-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event && event.target && event.target.classList.add('active');
 
+            // Xóa hiệu ứng cũ
+            document.querySelectorAll('.falling-item').forEach(el => el.remove());
+
             if (themeName === 'pink') {
-                createSakuraPetals();
-            } else {
-                document.querySelectorAll('.sakura').forEach(el => el.remove());
+                createFallingAnimation('sakura', '#ffb7c5', 16);
+            } else if (themeName === 'green') {
+                createFallingAnimation('mint-leaf', '#a7f3d0', 16);
             }
         }
 
-        function createSakuraPetals() {
-            if(document.querySelector('.sakura')) return;
-            for(let i=0; i<16; i++) {
-                let sak = document.createElement('div');
-                sak.classList.add('sakura');
-                sak.style.left = Math.random() * 100 + 'vw';
-                sak.style.animationDuration = (Math.random() * 3.5 + 3) + 's';
-                sak.style.animationDelay = (Math.random() * 5) + 's';
-                sak.style.width = (Math.random() * 8 + 6) + 'px';
-                sak.style.height = sak.style.width;
-                document.body.appendChild(sak);
+        function createFallingAnimation(className, color, count) {
+            for(let i=0; i<count; i++) {
+                let item = document.createElement('div');
+                item.classList.add('falling-item', className);
+                item.style.backgroundColor = color;
+                item.style.left = Math.random() * 100 + 'vw';
+                item.style.animationDuration = (Math.random() * 3.5 + 3) + 's';
+                item.style.animationDelay = (Math.random() * 5) + 's';
+                item.style.width = (Math.random() * 8 + 6) + 'px';
+                item.style.height = item.style.width;
+                if(className === 'mint-leaf') {
+                    item.style.borderRadius = '50% 0 50% 50%'; // Tạo hình chiếc lá
+                }
+                document.body.appendChild(item);
             }
         }
 
-        // Âm thanh Web Audio API & Nhạc nền Chill
         let audioCtx = null;
         let bgmInterval = null;
         let isBgmPlaying = false;
@@ -892,7 +880,6 @@
             }
         }
 
-        // Kết nối Online PeerJS
         function initPeerConnection() {
             const shortId = Math.floor(1000 + Math.random() * 9000).toString();
             onlinePeer = new Peer('caro-' + shortId);
