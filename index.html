@@ -9,7 +9,7 @@
     <style>
         :root {
             --bg-color: #0f172a;
-            --panel-bg: rgba(30, 41, 59, 0.8);
+            --panel-bg: rgba(30, 41, 59, 0.85);
             --text-color: #f8fafc;
             --accent-color: #6366f1;
             --accent-hover: #4f46e5;
@@ -24,7 +24,7 @@
         /* Theme: Hồng Pastel kết hợp Hoa Anh Đào */
         body.theme-pink {
             --bg-color: #fff1f2;
-            --panel-bg: rgba(255, 228, 230, 0.85);
+            --panel-bg: rgba(255, 228, 230, 0.9);
             --text-color: #881337;
             --accent-color: #f43f5e;
             --accent-hover: #e11d48;
@@ -33,14 +33,14 @@
             --cell-hover: #fda4af;
             --x-color: #be123c;
             --o-color: #0284c7;
-            background-image: radial-gradient(#fda4af 1px, transparent 1px);
+            background-image: radial-gradient(#fda4af 1.2px, transparent 1.2px);
             background-size: 24px 24px;
         }
 
         /* Theme: Xanh Bạc Hà */
         body.theme-green {
             --bg-color: #ecfdf5;
-            --panel-bg: rgba(209, 250, 229, 0.85);
+            --panel-bg: rgba(209, 250, 229, 0.9);
             --text-color: #064e3b;
             --accent-color: #10b981;
             --accent-hover: #059669;
@@ -54,7 +54,7 @@
         /* Theme: Tím Huyền Ảo */
         body.theme-purple {
             --bg-color: #1e1b4b;
-            --panel-bg: rgba(49, 46, 129, 0.8);
+            --panel-bg: rgba(49, 46, 129, 0.85);
             --text-color: #e0e7ff;
             --accent-color: #a855f7;
             --accent-hover: #9333ea;
@@ -68,7 +68,7 @@
         /* Theme: Vàng Hoàng Gia */
         body.theme-gold {
             --bg-color: #1c1917;
-            --panel-bg: rgba(41, 37, 36, 0.85);
+            --panel-bg: rgba(41, 37, 36, 0.9);
             --text-color: #fef08a;
             --accent-color: #eab308;
             --accent-hover: #ca8a04;
@@ -84,7 +84,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Outfit', sans-serif;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s, color 0.2s, transform 0.15s;
         }
 
         body {
@@ -97,6 +97,7 @@
             justify-content: center;
             padding: 15px;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* Màn hình chờ / Menu chính */
@@ -112,35 +113,37 @@
             background: var(--bg-color);
             z-index: 50;
             padding: 20px;
+            top: 0;
+            left: 0;
         }
 
         .screen.hidden {
             opacity: 0;
             pointer-events: none;
-            display: none;
+            display: none !important;
         }
 
         .menu-card {
             background: var(--panel-bg);
-            padding: 40px;
-            border-radius: 20px;
+            padding: 40px 30px;
+            border-radius: 24px;
             box-shadow: var(--shadow);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.15);
-            max-width: 450px;
+            max-width: 420px;
             width: 100%;
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.35s ease-out;
         }
 
         @keyframes fadeIn {
-            from { transform: translateY(20px); opacity: 0; }
+            from { transform: translateY(15px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
         .menu-card h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 25px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
 
@@ -150,18 +153,22 @@
             color: white;
             border: none;
             padding: 14px;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 14px;
+            font-size: 1.05rem;
             font-weight: 700;
             cursor: pointer;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .menu-btn:hover {
             background: var(--accent-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
         }
 
         /* Giao diện game chính */
@@ -169,17 +176,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            max-width: 720px;
+            max-width: 700px;
             width: 100%;
+            z-index: 10;
         }
 
         .game-container.hidden {
-            display: none;
+            display: none !important;
         }
 
         header {
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .stats-bar {
@@ -187,7 +195,7 @@
             gap: 15px;
             background: var(--panel-bg);
             padding: 10px 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             backdrop-filter: blur(12px);
             box-shadow: var(--shadow);
             margin-bottom: 12px;
@@ -210,7 +218,7 @@
             color: white;
             border: none;
             padding: 9px 16px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
@@ -222,11 +230,15 @@
             transform: translateY(-2px);
         }
 
+        button:active {
+            transform: scale(0.96);
+        }
+
         /* Khung Online */
         .online-panel {
             background: var(--panel-bg);
             padding: 12px 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             backdrop-filter: blur(12px);
             box-shadow: var(--shadow);
             margin-bottom: 12px;
@@ -241,13 +253,13 @@
 
         .online-panel input {
             padding: 8px 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.2);
             background: rgba(0,0,0,0.2);
             color: var(--text-color);
             font-size: 0.9rem;
             outline: none;
-            width: 150px;
+            width: 140px;
             text-align: center;
             font-weight: bold;
         }
@@ -255,31 +267,31 @@
         /* Bàn cờ 15x15 */
         .board-container {
             background: var(--panel-bg);
-            padding: 14px;
-            border-radius: 16px;
+            padding: 12px;
+            border-radius: 18px;
             backdrop-filter: blur(12px);
             box-shadow: var(--shadow);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border: 1px solid rgba(255,255,255,0.1);
         }
 
         .board {
             display: grid;
-            grid-template-columns: repeat(15, 30px);
-            grid-template-rows: repeat(15, 30px);
+            grid-template-columns: repeat(15, 32px);
+            grid-template-rows: repeat(15, 32px);
             gap: 3px;
             background-color: var(--board-bg);
-            padding: 5px;
-            border-radius: 8px;
+            padding: 6px;
+            border-radius: 10px;
         }
 
         .cell {
             background-color: var(--cell-bg);
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
             user-select: none;
@@ -287,13 +299,13 @@
 
         .cell:hover {
             background-color: var(--cell-hover);
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         .cell.x { color: var(--x-color); text-shadow: 0 0 8px rgba(244, 63, 94, 0.4); }
         .cell.o { color: var(--o-color); text-shadow: 0 0 8px rgba(56, 189, 248, 0.4); }
 
-        /* Modal / Cửa hàng / Setting chung */
+        /* Modal chung */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -303,7 +315,7 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
             z-index: 1000;
         }
 
@@ -315,22 +327,22 @@
         .modal-content {
             background: var(--panel-bg);
             padding: 30px;
-            border-radius: 18px;
+            border-radius: 20px;
             text-align: center;
             box-shadow: var(--shadow);
             backdrop-filter: blur(20px);
-            max-width: 450px;
+            max-width: 420px;
             width: 90%;
             border: 1px solid rgba(255,255,255,0.15);
             animation: scaleUp 0.3s ease;
         }
 
         @keyframes scaleUp {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.85); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
-        .modal-content h2 { margin-bottom: 15px; font-size: 1.6rem; }
+        .modal-content h2 { margin-bottom: 20px; font-size: 1.5rem; }
 
         .shop-items {
             display: flex;
@@ -344,8 +356,10 @@
             background: var(--cell-bg);
             color: var(--text-color);
             border: 2px solid transparent;
-            padding: 8px 14px;
+            padding: 10px 14px;
             font-size: 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
         }
 
         .shop-btn.active { border-color: var(--accent-color); }
@@ -357,7 +371,7 @@
 
         .setting-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
@@ -366,23 +380,24 @@
             accent-color: var(--accent-color);
         }
 
-        /* Hiệu ứng hoa anh đào rơi cho theme hồng */
+        /* Hiệu ứng hoa anh đào rơi */
         .sakura {
             position: fixed;
-            top: -10px;
-            background: pink;
+            top: -15px;
+            background: #ffb7c5;
             border-radius: 150% 0 150% 0;
             animation: fall linear infinite;
             z-index: 1;
             pointer-events: none;
+            opacity: 0.8;
         }
         @keyframes fall {
-            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            0% { transform: translateY(-15px) rotate(0deg); opacity: 0.9; }
             100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
         }
     </style>
 </head>
-<body class="theme-default">
+<body>
 
     <!-- MÀN HÌNH CHỜ (MENU CHÍNH) -->
     <div class="screen" id="main-menu">
@@ -410,7 +425,7 @@
     <!-- GIAO DIỆN GAME CHÍNH -->
     <div class="game-container hidden" id="game-screen">
         <header>
-            <h1 style="font-size: 1.8rem; letter-spacing: 1px;">CỜ CARO 15x15</h1>
+            <h1 style="font-size: 1.6rem; letter-spacing: 1px;">CỜ CARO 15x15</h1>
         </header>
 
         <div class="stats-bar">
@@ -431,7 +446,7 @@
             <button onclick="createRoom()">Tạo Phòng</button>
             <input type="text" id="room-code-input" placeholder="Mã 4 số">
             <button onclick="joinRoom()">Vào Phòng</button>
-            <span id="connection-status" style="font-size: 0.85rem; opacity: 0.8; width: 100%; text-align: center;">Chưa kết nối phòng</span>
+            <span id="connection-status" style="font-size: 0.85rem; opacity: 0.85; width: 100%; text-align: center;">Chưa kết nối phòng</span>
         </div>
 
         <div class="board-container">
@@ -462,7 +477,7 @@
                 <label>🎵 Nhạc Nền Chill:</label>
                 <div style="display: flex; gap: 10px; align-items: center;">
                     <input type="range" id="bgm-volume" min="0" max="1" step="0.05" value="0.3" oninput="updateVolume()">
-                    <button onclick="toggleBGM()" id="bgm-toggle-btn" style="padding: 5px 10px; font-size: 0.8rem;">Tắt/Bật</button>
+                    <button onclick="toggleBGM()" id="bgm-toggle-btn" style="padding: 6px 12px; font-size: 0.85rem;">Tắt/Bật</button>
                 </div>
             </div>
             <div class="setting-group">
@@ -475,4 +490,483 @@
     </div>
 
     <!-- MODAL THẮNG / THUA -->
-    <div class="modal" id
+    <div class="modal" id="win-modal">
+        <div class="modal-content">
+            <h2 id="winner-text">X Thắng Cuộc!</h2>
+            <p id="reward-text" style="margin-bottom: 20px;">Bạn nhận được +20 xu!</p>
+            <button onclick="closeWinModal()">Chơi Tiếp</button>
+        </div>
+    </div>
+
+    <!-- CODE JAVASCRIPT ĐẦY ĐỦ -->
+    <script>
+        const BOARD_SIZE = 15;
+        let board = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(''));
+        let currentPlayer = 'X';
+        let gameActive = true;
+        let gameMode = 'AI-Hard';
+        let coins = parseInt(localStorage.getItem('caro_coins')) || 100;
+        let currentTheme = localStorage.getItem('caro_theme') || 'default';
+
+        let onlinePeer = null;
+        let onlineConn = null;
+        let myRole = '';
+
+        document.getElementById('coin-count').innerText = coins;
+        setTheme(currentTheme, 0);
+        createBoard();
+
+        // Xử lý chuyển màn hình menu
+        function openModeSelect() {
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('mode-select-screen').classList.remove('hidden');
+        }
+
+        function backToMenu() {
+            document.getElementById('main-menu').classList.remove('hidden');
+            document.getElementById('mode-select-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.add('hidden');
+            if(onlinePeer) { onlinePeer.destroy(); onlinePeer = null; }
+        }
+
+        function startGameMode(mode) {
+            gameMode = mode;
+            document.getElementById('mode-select-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            
+            let name = 'Đấu với Máy (Khó)';
+            if(mode === 'AI-Easy') name = 'Đấu với Máy (Dễ)';
+            if(mode === 'AI-Medium') name = 'Đấu với Máy (Trung bình)';
+            if(mode === 'Local') name = '2 Người (Chung máy)';
+            if(mode === 'Online') {
+                name = 'Chế độ Online';
+                document.getElementById('online-controls').style.display = 'flex';
+                initPeerConnection();
+            } else {
+                document.getElementById('online-controls').style.display = 'none';
+            }
+            document.getElementById('mode-display').innerText = name;
+            resetGame();
+        }
+
+        function createBoard() {
+            const boardElement = document.getElementById('board');
+            boardElement.innerHTML = '';
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.addEventListener('click', () => handleCellClick(r, c));
+                    boardElement.appendChild(cell);
+                }
+            }
+        }
+
+        function handleCellClick(r, c) {
+            if (!gameActive || board[r][c] !== '') return;
+
+            if (gameMode === 'Online') {
+                if (!onlineConn || !onlineConn.open) {
+                    alert("Chưa kết nối phòng mạng!");
+                    return;
+                }
+                if (currentPlayer !== myRole) {
+                    alert("Chưa đến lượt bạn!");
+                    return;
+                }
+                onlineConn.send({ type: 'move', r: r, c: c, player: currentPlayer });
+            }
+
+            makeMove(r, c, currentPlayer);
+            playSFX();
+
+            if (checkWin(r, c, currentPlayer)) {
+                endGame(currentPlayer);
+                return;
+            }
+            if (checkDraw()) {
+                endGame('Draw');
+                return;
+            }
+
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            updateTurnDisplay();
+
+            if (gameMode.startsWith('AI') && gameActive && currentPlayer === 'O') {
+                setTimeout(aiTurn, 350);
+            }
+        }
+
+        function makeMove(r, c, player) {
+            board[r][c] = player;
+            const cell = document.querySelectorAll('.cell')[r * BOARD_SIZE + c];
+            cell.innerText = player;
+            cell.classList.add(player.toLowerCase());
+        }
+
+        // AI 3 Mức Độ Thông Minh
+        function aiTurn() {
+            let move = null;
+            if (gameMode === 'AI-Hard') {
+                move = getBestAIMove();
+            } else if (gameMode === 'AI-Medium') {
+                move = Math.random() < 0.65 ? getBestAIMove() : getRandomSmartMove();
+            } else {
+                move = getRandomSmartMove();
+            }
+
+            if (move) {
+                makeMove(move.r, move.c, 'O');
+                playSFX();
+                if (checkWin(move.r, move.c, 'O')) {
+                    endGame('O');
+                    return;
+                }
+                if (checkDraw()) {
+                    endGame('Draw');
+                    return;
+                }
+                currentPlayer = 'X';
+                updateTurnDisplay();
+            }
+        }
+
+        function getBestAIMove() {
+            let bestScore = -Infinity;
+            let bestMove = null;
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    if (board[r][c] === '') {
+                        board[r][c] = 'O';
+                        let score = evaluatePosition(r, c, 'O') * 1.3;
+                        board[r][c] = 'X';
+                        score += evaluatePosition(r, c, 'X');
+                        board[r][c] = '';
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMove = { r, c };
+                        }
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        function getRandomSmartMove() {
+            let emptyCells = [];
+            for (let r = 0; r < BOARD_SIZE; r++) {
+                for (let c = 0; c < BOARD_SIZE; c++) {
+                    if (board[r][c] === '') {
+                        let hasNeighbor = false;
+                        for(let dr = -2; dr <= 2; dr++) {
+                            for(let dc = -2; dc <= 2; dc++) {
+                                let nr = r + dr, nc = c + dc;
+                                if(nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE && board[nr][nc] !== '') {
+                                    hasNeighbor = true;
+                                }
+                            }
+                        }
+                        if(hasNeighbor || board[7][7] === '') emptyCells.push({r, c});
+                    }
+                }
+            }
+            if (emptyCells.length === 0) return {r: 7, c: 7};
+            return emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        }
+
+        function evaluatePosition(r, c, player) {
+            const directions = [{ dr: 0, dc: 1 }, { dr: 1, dc: 0 }, { dr: 1, dc: 1 }, { dr: 1, dc: -1 }];
+            let totalScore = 0;
+            directions.forEach(dir => {
+                let count = 1, blocked = 0;
+                let i = 1;
+                while (true) {
+                    let nr = r + dir.dr * i, nc = c + dir.dc * i;
+                    if (nr < 0 || nr >= BOARD_SIZE || nc < 0 || nc >= BOARD_SIZE) { blocked++; break; }
+                    if (board[nr][nc] === player) { count++; i++; }
+                    else if (board[nr][nc] !== '') { blocked++; break; }
+                    else break;
+                }
+                i = 1;
+                while (true) {
+                    let nr = r - dir.dr * i, nc = c - dir.dc * i;
+                    if (nr < 0 || nr >= BOARD_SIZE || nc < 0 || nc >= BOARD_SIZE) { blocked++; break; }
+                    if (board[nr][nc] === player) { count++; i++; }
+                    else if (board[nr][nc] !== '') { blocked++; break; }
+                    else break;
+                }
+                if (count >= 5) totalScore += 100000;
+                else if (count === 4 && blocked === 0) totalScore += 10000;
+                else if (count === 4 && blocked === 1) totalScore += 1000;
+                else if (count === 3 && blocked === 0) totalScore += 1000;
+                else if (count === 3 && blocked === 1) totalScore += 100;
+                else if (count === 2) totalScore += 10;
+            });
+            return totalScore;
+        }
+
+        function checkWin(r, c, player) {
+            const directions = [{ dr: 0, dc: 1 }, { dr: 1, dc: 0 }, { dr: 1, dc: 1 }, { dr: 1, dc: -1 }];
+            return directions.some(dir => {
+                let count = 1;
+                let i = 1;
+                while (r + dir.dr * i >= 0 && r + dir.dr * i < BOARD_SIZE && c + dir.dc * i >= 0 && c + dir.dc * i < BOARD_SIZE && board[r + dir.dr * i][c + dir.dc * i] === player) { count++; i++; }
+                i = 1;
+                while (r - dir.dr * i >= 0 && r - dir.dr * i < BOARD_SIZE && c - dir.dc * i >= 0 && c - dir.dc * i < BOARD_SIZE && board[r - dir.dr * i][c - dir.dc * i] === player) { count++; i++; }
+                return count >= 5;
+            });
+        }
+
+        function checkDraw() {
+            return board.flat().every(cell => cell !== '');
+        }
+
+        function updateTurnDisplay() {
+            const indicator = document.getElementById('turn-indicator');
+            const colorClass = currentPlayer === 'X' ? 'var(--x-color)' : 'var(--o-color)';
+            let roleTxt = gameMode === 'Online' ? ` (Bạn: ${myRole})` : '';
+            indicator.innerHTML = `Lượt: <span style="color: ${colorClass};">${currentPlayer}</span>${roleTxt}`;
+        }
+
+        function resetGame() {
+            if (gameMode === 'Online' && onlineConn && onlineConn.open) {
+                onlineConn.send({ type: 'reset' });
+            }
+            executeReset();
+        }
+
+        function executeReset() {
+            board = Array(BOARD_SIZE).fill(null).map(() => Array(BOARD_SIZE).fill(''));
+            gameActive = true;
+            currentPlayer = 'X';
+            updateTurnDisplay();
+            createBoard();
+        }
+
+        function endGame(winner) {
+            gameActive = false;
+            const modal = document.getElementById('win-modal');
+            const wText = document.getElementById('winner-text');
+            const rText = document.getElementById('reward-text');
+
+            if (winner === 'Draw') {
+                wText.innerText = "Hòa Cờ!";
+                rText.innerText = "Không có xu nào được cộng.";
+            } else {
+                wText.innerText = `${winner} Thắng Cuộc!`;
+                if (gameMode === 'Online') {
+                    if (winner === myRole) {
+                        coins += 25;
+                        rText.innerText = "Thắng Online! Nhận +25 xu!";
+                    } else {
+                        rText.innerText = "Đối thủ đã thắng!";
+                    }
+                } else {
+                    if (winner === 'X') {
+                        coins += 20;
+                        rText.innerText = "Bạn nhận được +20 xu!";
+                    } else {
+                        rText.innerText = "Máy đã thắng!";
+                    }
+                }
+                localStorage.setItem('caro_coins', coins);
+                document.getElementById('coin-count').innerText = coins;
+            }
+            modal.classList.add('show');
+        }
+
+        function closeWinModal() {
+            document.getElementById('win-modal').classList.remove('show');
+            resetGame();
+        }
+
+        // Quản lý Modal & Shop & Settings
+        function openShopModal() { document.getElementById('shop-modal').classList.add('show'); }
+        function openSettingsModal() { document.getElementById('settings-modal').classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+        function setTheme(themeName, cost) {
+            if (cost > 0 && coins < cost) {
+                alert("Bạn không đủ xu để mở khóa giao diện này!");
+                return;
+            }
+            if (cost > 0) {
+                coins -= cost;
+                localStorage.setItem('caro_coins', coins);
+                document.getElementById('coin-count').innerText = coins;
+            }
+            document.body.className = `theme-${themeName}`;
+            localStorage.setItem('caro_theme', themeName);
+
+            // Cập nhật nút active trong shop
+            const buttons = document.querySelectorAll('.shop-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event && event.target && event.target.classList.add('active');
+
+            if (themeName === 'pink') {
+                createSakuraPetals();
+            } else {
+                document.querySelectorAll('.sakura').forEach(el => el.remove());
+            }
+        }
+
+        function createSakuraPetals() {
+            if(document.querySelector('.sakura')) return;
+            for(let i=0; i<16; i++) {
+                let sak = document.createElement('div');
+                sak.classList.add('sakura');
+                sak.style.left = Math.random() * 100 + 'vw';
+                sak.style.animationDuration = (Math.random() * 3.5 + 3) + 's';
+                sak.style.animationDelay = (Math.random() * 5) + 's';
+                sak.style.width = (Math.random() * 8 + 6) + 'px';
+                sak.style.height = sak.style.width;
+                document.body.appendChild(sak);
+            }
+        }
+
+        // Âm thanh Web Audio API & Nhạc nền Chill
+        let audioCtx = null;
+        let bgmInterval = null;
+        let isBgmPlaying = false;
+
+        function playSFX() {
+            let sfxVol = parseFloat(document.getElementById('sfx-volume').value);
+            if (sfxVol === 0) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(sfxVol * 0.3, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } catch(e) {}
+        }
+
+        function toggleBGM() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            isBgmPlaying = !isBgmPlaying;
+            if (isBgmPlaying) {
+                startChillBGM();
+                alert("Đã bật nhạc nền Chill!");
+            } else {
+                clearInterval(bgmInterval);
+                alert("Đã tắt nhạc nền!");
+            }
+        }
+
+        function startChillBGM() {
+            if (bgmInterval) clearInterval(bgmInterval);
+            const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23];
+            bgmInterval = setInterval(() => {
+                let bgmVol = parseFloat(document.getElementById('bgm-volume').value);
+                if (!isBgmPlaying || bgmVol === 0) return;
+                try {
+                    let note = notes[Math.floor(Math.random() * notes.length)];
+                    let osc = audioCtx.createOscillator();
+                    let gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(note, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(bgmVol * 0.12, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 1.4);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.4);
+                } catch(e) {}
+            }, 1900);
+        }
+
+        function updateVolume() {
+            let bgmVol = parseFloat(document.getElementById('bgm-volume').value);
+            if (bgmVol > 0 && !isBgmPlaying) {
+                isBgmPlaying = true;
+                startChillBGM();
+            }
+        }
+
+        // Kết nối Online PeerJS
+        function initPeerConnection() {
+            const shortId = Math.floor(1000 + Math.random() * 9000).toString();
+            onlinePeer = new Peer('caro-' + shortId);
+
+            onlinePeer.on('open', (id) => {
+                let code = id.replace('caro-', '');
+                document.getElementById('room-code-input').value = code;
+                document.getElementById('connection-status').innerText = `Mã phòng của bạn: ${code}`;
+            });
+
+            onlinePeer.on('connection', (conn) => {
+                onlineConn = conn;
+                myRole = 'X';
+                setupOnlineEvents();
+                document.getElementById('connection-status').innerText = "Đối thủ đã vào! Bạn là X (Đi trước).";
+                alert("Đối thủ đã kết nối! Bạn cầm quân X.");
+            });
+        }
+
+        function createRoom() {
+            if(!onlinePeer) initPeerConnection();
+            alert("Mã phòng của bạn đã hiển thị ở ô nhập mã. Hãy gửi cho bạn bè nhé!");
+        }
+
+        function joinRoom() {
+            let code = document.getElementById('room-code-input').value.trim();
+            if (code.length !== 4) {
+                alert("Vui lòng nhập đúng mã phòng 4 số!");
+                return;
+            }
+            if (!onlinePeer) {
+                onlinePeer = new Peer();
+                onlinePeer.on('open', () => doConnect(code));
+            } else {
+                doConnect(code);
+            }
+        }
+
+        function doConnect(code) {
+            document.getElementById('connection-status').innerText = "Đang kết nối...";
+            onlineConn = onlinePeer.connect('caro-' + code);
+            myRole = 'O';
+
+            onlineConn.on('open', () => {
+                document.getElementById('connection-status').innerText = "Đã kết nối! Bạn là O (Đi sau).";
+                alert("Vào phòng thành công! Bạn là O.");
+                setupOnlineEvents();
+            });
+
+            onlineConn.on('error', () => {
+                alert("Không thể kết nối phòng này!");
+            });
+        }
+
+        function setupOnlineEvents() {
+            onlineConn.on('data', (data) => {
+                if (data.type === 'move') {
+                    makeMove(data.r, data.c, data.player);
+                    playSFX();
+                    if (checkWin(data.r, data.c, data.player)) {
+                        endGame(data.player);
+                        return;
+                    }
+                    if (checkDraw()) {
+                        endGame('Draw');
+                        return;
+                    }
+                    currentPlayer = data.player === 'X' ? 'O' : 'X';
+                    updateTurnDisplay();
+                } else if (data.type === 'reset') {
+                    executeReset();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
